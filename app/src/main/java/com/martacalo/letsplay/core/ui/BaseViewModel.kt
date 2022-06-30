@@ -2,18 +2,16 @@ package com.martacalo.letsplay.core.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-abstract class BaseViewModel<VE : ViewEvent, VS : ViewState> : ViewModel() {
+abstract class BaseViewModel<VI : ViewIntent, VS : ViewState> : ViewModel() {
 
     private val initialState: VS by lazy { createInitialState() }
 
-    private val viewEventFlow = MutableSharedFlow<VE>()
+    private val viewIntentFlow = MutableSharedFlow<VI>()
 
     private val _viewStateFlow = MutableStateFlow(initialState)
     val state: StateFlow<VS>
@@ -21,14 +19,14 @@ abstract class BaseViewModel<VE : ViewEvent, VS : ViewState> : ViewModel() {
 
     abstract fun createInitialState(): VS
 
-    abstract fun handleEvent(event: VE): Flow<StateReducer<VS>>
+    abstract fun handleIntent(intent: VI): Flow<StateReducer<VS>>
 
-    fun produceEvent(event: VE) = viewModelScope.launch { viewEventFlow.emit(event) }
+    fun produceIntent(intent: VI) = viewModelScope.launch { viewIntentFlow.emit(intent) }
 
     init {
         viewModelScope.launch {
-            viewEventFlow
-                .flatMapLatest { handleEvent(it) }
+            viewIntentFlow
+                .flatMapLatest { handleIntent(it) }
                 .scan(initialState) { viewState, change -> change.reduce(viewState) }
                 .onEach { setState(it) }
                 .launchIn(viewModelScope)

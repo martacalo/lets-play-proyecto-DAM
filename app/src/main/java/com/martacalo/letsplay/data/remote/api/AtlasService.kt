@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface AtlasService {
 
-    @GET("search?limit=100&client_id=JLBr5npPhV")
-    suspend fun search(@Query("query") query: String = ""): Response<Search>
+    @GET("search?limit=50&client_id=JLBr5npPhV")
+    suspend fun search(): Response<Search>
 
 }

@@ -19,16 +19,18 @@ class SearchRepositoryImpl @Inject constructor(
 ) : SearchRepository {
 
     override suspend fun search(query: String): Flow<ResponseResult<List<Game>>> =
-        gamesDao
-            .getAll()
-            .distinctUntilChanged()
-            .map { games -> games.map { it.asUiModel() } }
-            .map { ResponseResult.Success(it) }
+        withContext(Dispatchers.IO) {
+            gamesDao
+                .search("%$query%")
+                .distinctUntilChanged()
+                .map { games -> games.map { it.asUiModel() } }
+                .map { ResponseResult.Success(it) }
+        }
 
     override suspend fun refreshGames() {
         withContext(Dispatchers.IO) {
-            val response = apiHelper.search(query = "")
-            val responseBody = apiHelper.search(query = "").body()
+            val response = apiHelper.search()
+            val responseBody = apiHelper.search().body()
             if (response.isSuccessful && responseBody != null) {
                 gamesDao.insertAll(responseBody.games.map { it.asDatabaseModel() })
             }

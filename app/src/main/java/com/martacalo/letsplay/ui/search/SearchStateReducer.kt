@@ -15,7 +15,7 @@ sealed class SearchStateReducer : StateReducer<SearchViewState> {
     ) : SearchStateReducer() {
         override fun reduce(initialState: SearchViewState): SearchViewState =
             initialState.copy(
-                gamesListState = GamesListState.Success(gamesList),
+                gamesList = gamesList,
                 message = errorMessage,
             )
     }

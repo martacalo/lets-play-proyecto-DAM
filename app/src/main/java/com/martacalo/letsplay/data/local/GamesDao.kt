@@ -12,6 +12,6 @@ interface GamesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(games: List<GameEntity>)
 
-    @Query("SELECT id, name, small, medium, thumb, large, original, playtime, min_players, max_players, year_published FROM game")
-    fun getAll(): Flow<List<GameEntity>>
+    @Query("SELECT id, name, small, medium, thumb, large, original, playtime, min_players, max_players, year_published FROM game WHERE name LIKE :name")
+    fun search(name: String): Flow<List<GameEntity>>
 }

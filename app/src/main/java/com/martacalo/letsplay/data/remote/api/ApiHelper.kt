@@ -5,5 +5,5 @@ import retrofit2.Response
 
 
 interface ApiHelper {
-    suspend fun search(query: String): Response<Search>
+    suspend fun search(): Response<Search>
 }

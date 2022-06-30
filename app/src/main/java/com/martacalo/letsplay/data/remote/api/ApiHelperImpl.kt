@@ -8,6 +8,6 @@ class ApiHelperImpl @Inject constructor(
     private val atlasService: AtlasService,
 ): ApiHelper {
 
-    override suspend fun search(query: String): Response<Search> =
-        atlasService.search(query)
+    override suspend fun search(): Response<Search> =
+        atlasService.search()
 }
