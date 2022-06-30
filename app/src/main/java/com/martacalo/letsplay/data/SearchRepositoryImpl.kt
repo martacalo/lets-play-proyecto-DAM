@@ -1,0 +1,38 @@
+package com.martacalo.letsplay.data
+
+import com.martacalo.letsplay.data.local.GamesDao
+import com.martacalo.letsplay.data.local.model.asUiModel
+import com.martacalo.letsplay.data.remote.ResponseResult
+import com.martacalo.letsplay.data.remote.api.ApiHelper
+import com.martacalo.letsplay.data.remote.model.asDatabaseModel
+import com.martacalo.letsplay.ui.search.model.Game
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+class SearchRepositoryImpl @Inject constructor(
+    private val apiHelper: ApiHelper,
+    private val gamesDao: GamesDao,
+) : SearchRepository {
+
+    override suspend fun search(query: String): Flow<ResponseResult<List<Game>>> =
+        gamesDao
+            .getAll()
+            .distinctUntilChanged()
+            .map { games -> games.map { it.asUiModel() } }
+            .map { ResponseResult.Success(it) }
+
+    override suspend fun refreshGames() {
+        withContext(Dispatchers.IO) {
+            val response = apiHelper.search(query = "")
+            val responseBody = apiHelper.search(query = "").body()
+            if (response.isSuccessful && responseBody != null) {
+                gamesDao.insertAll(responseBody.games.map { it.asDatabaseModel() })
+            }
+        }
+    }
+
+}
