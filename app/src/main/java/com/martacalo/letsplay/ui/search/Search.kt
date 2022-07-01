@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
@@ -83,41 +84,53 @@ fun GameItem(
     game: Game,
 ) {
     Row(
-        horizontalArrangement = Arrangement.Start,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .size(56.dp)
     ) {
-        AsyncImage(
-            model = game.images.thumb,
-            contentDescription = null,
-            modifier = Modifier
-                .size(32.dp)
-        )
-        Text(
-            text = game.name,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-        )
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.width(200.dp)
+        ) {
+            AsyncImage(
+                model = game.images.thumb,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(32.dp)
+            )
+            Text(
+                text = game.name,
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
 
-        Icon(Icons.Rounded.Person, contentDescription = "Number of players")
-        Spacer(modifier = Modifier.size(8.dp))
-        Text(
-            text = game.players,
-            style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier
-        )
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(Icons.Rounded.Person, contentDescription = "Number of players")
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(
+                text = game.players,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
+            )
 
-        Spacer(modifier = Modifier.size(32.dp))
+            Spacer(modifier = Modifier.size(32.dp))
 
-        Icon(Icons.Rounded.Refresh, contentDescription = "Number of players")
-        Spacer(modifier = Modifier.size(8.dp))
-        Text(
-            text = game.players,
-            style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier
-        )
+            Icon(Icons.Rounded.Refresh, contentDescription = "Number of players")
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(
+                text = game.players,
+                style = MaterialTheme.typography.labelMedium,
+                modifier = Modifier
+            )
+        }
     }
 }
