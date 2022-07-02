@@ -7,12 +7,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.martacalo.letsplay.ui.game.GameRoute
 import com.martacalo.letsplay.ui.library.LibraryRoute
 import com.martacalo.letsplay.ui.library.contract.LibraryNavigationEvent
 import com.martacalo.letsplay.ui.search.SearchRoute
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @Composable
 fun LetsPlayNavHost(
     modifier: Modifier = Modifier,
@@ -34,6 +36,12 @@ fun LetsPlayNavHost(
                     is LibraryNavigationEvent.NavigateToGame ->
                         navController.navigate("game/$it")
                 }
+            }
+        }
+
+        composable(route = "game/{gameId}") {
+            GameRoute {
+
             }
         }
 

@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.martacalo.letsplay.ui.library.model.Library
+import com.martacalo.letsplay.ui.library.model.LibraryGame
 import com.martacalo.letsplay.ui.search.model.Game
 import com.martacalo.letsplay.ui.search.model.Images
 
@@ -47,6 +49,27 @@ fun GameEntity.asUiModel() = Game(
     playtime,
     players = "$minPlayers - $maxPlayers ",
     yearPublished,
+)
+
+fun GameEntity.asLibraryUIModel() = LibraryGame(
+    commentary = commentary,
+    description = description,
+    descriptionPreview = descriptionPreview,
+    id = id,
+    gameId = id,
+    imagesEntity = imagesEntity.toImage(),
+    maxPlayers = maxPlayers,
+    maxPlaytime = maxPlaytime,
+    minAge = minAge,
+    minPlayers = minPlayers,
+    minPlaytime = minPlaytime,
+    name = name,
+    playtime = playtime,
+    price = price,
+    rank = rank,
+    thumbUrl = thumbUrl,
+    visits = visits,
+    yearPublished = yearPublished,
 )
 
 fun ImagesEntity.toImage() = Images(

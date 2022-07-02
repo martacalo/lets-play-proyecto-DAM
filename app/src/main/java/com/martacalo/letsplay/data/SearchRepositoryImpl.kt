@@ -1,7 +1,7 @@
 package com.martacalo.letsplay.data
 
 import com.martacalo.letsplay.data.local.GamesDao
-import com.martacalo.letsplay.data.local.model.LibraryDao
+import com.martacalo.letsplay.data.local.LibraryDao
 import com.martacalo.letsplay.data.local.model.LibraryEntity
 import com.martacalo.letsplay.data.local.model.asUiModel
 import com.martacalo.letsplay.data.remote.ResponseResult
@@ -11,7 +11,6 @@ import com.martacalo.letsplay.ui.search.model.Game
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

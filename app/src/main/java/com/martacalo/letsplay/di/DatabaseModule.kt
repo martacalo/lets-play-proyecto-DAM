@@ -3,7 +3,7 @@ package com.martacalo.letsplay.di
 import android.content.Context
 import com.martacalo.letsplay.data.local.AppDatabase
 import com.martacalo.letsplay.data.local.GamesDao
-import com.martacalo.letsplay.data.local.model.LibraryDao
+import com.martacalo.letsplay.data.local.LibraryDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
