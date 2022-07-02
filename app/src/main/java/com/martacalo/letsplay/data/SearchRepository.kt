@@ -5,6 +5,7 @@ import com.martacalo.letsplay.ui.search.model.Game
 import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
+    suspend fun saveGame(id: String)
     suspend fun search(query: String): Flow<ResponseResult<List<Game>>>
     suspend fun refreshGames()
 }

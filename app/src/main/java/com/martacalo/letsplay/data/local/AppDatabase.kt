@@ -4,20 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.martacalo.letsplay.data.local.model.DesignerEntity
-import com.martacalo.letsplay.data.local.model.GameEntity
-import com.martacalo.letsplay.data.local.model.ImagesEntity
+import com.martacalo.letsplay.data.local.model.*
 
 @Database(
     entities = [
         GameEntity::class,
         ImagesEntity::class,
         DesignerEntity::class,
+        LibraryEntity::class,
     ],
-    version = 1,
+    version = 3,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun gamesDao(): GamesDao
+    abstract fun libraryDao(): LibraryDao
 
     companion object {
         // For Singleton instantiation

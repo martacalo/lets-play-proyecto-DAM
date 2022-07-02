@@ -1,6 +1,8 @@
 package com.martacalo.letsplay.data
 
 import com.martacalo.letsplay.data.local.GamesDao
+import com.martacalo.letsplay.data.local.model.LibraryDao
+import com.martacalo.letsplay.data.local.model.LibraryEntity
 import com.martacalo.letsplay.data.local.model.asUiModel
 import com.martacalo.letsplay.data.remote.ResponseResult
 import com.martacalo.letsplay.data.remote.api.ApiHelper
@@ -9,6 +11,7 @@ import com.martacalo.letsplay.ui.search.model.Game
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -16,7 +19,10 @@ import javax.inject.Inject
 class SearchRepositoryImpl @Inject constructor(
     private val apiHelper: ApiHelper,
     private val gamesDao: GamesDao,
+    private val libraryDao: LibraryDao,
 ) : SearchRepository {
+
+    override suspend fun saveGame(id: String) = libraryDao.insert(LibraryEntity(gameId = id))
 
     override suspend fun search(query: String): Flow<ResponseResult<List<Game>>> =
         withContext(Dispatchers.IO) {

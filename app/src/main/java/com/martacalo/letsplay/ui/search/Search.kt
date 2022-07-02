@@ -1,5 +1,7 @@
 package com.martacalo.letsplay.ui.search
 
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,11 +12,13 @@ import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -22,6 +26,9 @@ import coil.compose.AsyncImage
 import com.martacalo.letsplay.ui.common.SearchBar
 import com.martacalo.letsplay.ui.search.model.Game
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.onEach
 
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalCoroutinesApi
@@ -33,6 +40,20 @@ fun SearchRoute(
     viewModel.search()
 
     val viewState by viewModel.state.collectAsState()
+    val context = LocalContext.current
+    
+    LaunchedEffect(viewModel) {
+        viewModel
+            .effect
+            .filterIsInstance<SearchViewEffect>()
+            .onEach {
+                when (it) {
+                    is SearchViewEffect.Toast ->
+                        Toast.makeText(context, "${it.message} added to your library", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .collect()
+    }
 
     Scaffold(
         topBar = {
@@ -62,7 +83,7 @@ fun SearchRoute(
 
             Spacer(modifier = Modifier.size(16.dp))
 
-            GamesList(games = viewState.gamesList)
+            GamesList(games = viewState.gamesList) { viewModel.selectGame(it) }
 
         }
     }
@@ -71,10 +92,11 @@ fun SearchRoute(
 @Composable
 fun GamesList(
     games: List<Game> = listOf(),
+    onClick: (Game) -> Unit,
 ) {
     LazyColumn {
         items(games) { game ->
-            GameItem(game = game)
+            GameItem(game = game) { onClick(game) }
         }
     }
 }
@@ -82,6 +104,7 @@ fun GamesList(
 @Composable
 fun GameItem(
     game: Game,
+    onClick: (Game) -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -89,11 +112,14 @@ fun GameItem(
         modifier = Modifier
             .fillMaxWidth()
             .size(56.dp)
+            .clickable(
+                onClick = { onClick(game) },
+            )
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.width(200.dp)
+            modifier = Modifier.width(180.dp)
         ) {
             AsyncImage(
                 model = game.images.thumb,
@@ -124,10 +150,10 @@ fun GameItem(
 
             Spacer(modifier = Modifier.size(32.dp))
 
-            Icon(Icons.Rounded.Refresh, contentDescription = "Number of players")
+            Icon(Icons.Rounded.Refresh, contentDescription = "Play time")
             Spacer(modifier = Modifier.size(8.dp))
             Text(
-                text = game.players,
+                text = game.playtime,
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier
             )

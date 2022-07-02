@@ -9,6 +9,12 @@ sealed class SearchStateReducer : StateReducer<SearchViewState> {
         override fun reduce(initialState: SearchViewState): SearchViewState = initialState.copy()
     }
 
+    data class SaveGame(
+        val game: Game,
+    ): SearchStateReducer() {
+        override fun reduce(initialState: SearchViewState): SearchViewState = initialState.copy()
+    }
+
     class Search(
         val gamesList: List<Game> = listOf(),
         val errorMessage: String? = null,
