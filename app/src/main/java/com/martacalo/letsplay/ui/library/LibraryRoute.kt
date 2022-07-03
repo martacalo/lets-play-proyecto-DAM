@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -100,7 +101,8 @@ fun LibraryItem(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(8.dp)
         ) {
             AsyncImage(
@@ -125,6 +127,21 @@ fun LibraryItem(
 
                     Text(text = "#${game.rank}")
                 }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    GameDetail(icon = Icons.Rounded.Person, text = "${game.minPlayers} - ${game.maxPlayers}")
+
+                    Spacer(modifier = Modifier.size(16.dp))
+
+                    GameDetail(icon = Icons.Rounded.Schedule, text = game.playtime)
+
+                    Spacer(modifier = Modifier.size(16.dp))
+
+                    GameDetail(icon = Icons.Rounded.ChildCare, text = "+${game.minAge}")
+                }
                 game.descriptionPreview?.let {
                     Text(
                         text = it,
@@ -134,6 +151,28 @@ fun LibraryItem(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun GameDetail(
+    icon: ImageVector,
+    text: String,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start,
+    ) {
+        Icon(
+            icon,
+            contentDescription = null
+        )
+        Spacer(modifier = Modifier.size(8.dp))
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier
+        )
     }
 }
 
