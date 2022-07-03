@@ -34,14 +34,17 @@ fun LetsPlayNavHost(
                     LibraryNavigationEvent.NavigateToSearch ->
                         navController.navigate("search")
                     is LibraryNavigationEvent.NavigateToGame ->
-                        navController.navigate("game/$it")
+                        navController.navigate("game/${it.id}")
                 }
             }
         }
 
         composable(route = "game/{gameId}") {
-            GameDetailsRoute {
-
+            GameDetailsRoute(
+                viewModel = hiltViewModel(),
+                gameId = it.arguments?.getString("gameId") ?: ""
+            ) {
+                navController.popBackStack()
             }
         }
 

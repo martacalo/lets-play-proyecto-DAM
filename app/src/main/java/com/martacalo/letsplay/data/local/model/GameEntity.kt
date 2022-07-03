@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.martacalo.letsplay.ui.gamedetails.model.GameDetails
 import com.martacalo.letsplay.ui.library.model.Library
 import com.martacalo.letsplay.ui.library.model.LibraryGame
 import com.martacalo.letsplay.ui.search.model.Game
@@ -69,6 +70,27 @@ fun GameEntity.asLibraryUIModel() = LibraryGame(
     rank = rank,
     thumbUrl = thumbUrl,
     visits = visits,
+    yearPublished = yearPublished,
+)
+
+fun GameEntity.asGameDetailsUIModel() = GameDetails(
+    commentary = commentary ?: "",
+    description = description ?: "",
+    descriptionPreview = descriptionPreview ?: "",
+    id = id,
+    gameId = id,
+    imagesEntity = imagesEntity.toImage(),
+    maxPlayers = maxPlayers ?: 0,
+    maxPlaytime = maxPlaytime ?: 0,
+    minAge = minAge ?: 0,
+    minPlayers = minPlayers,
+    minPlaytime = minPlaytime ?: 0,
+    name = name,
+    playtime = playtime,
+    price = price ?: "",
+    rank = rank ?: 0,
+    thumbUrl = thumbUrl ?: "",
+    visits = visits ?: 0,
     yearPublished = yearPublished,
 )
 

@@ -1,9 +1,6 @@
 package com.martacalo.letsplay.di
 
-import com.martacalo.letsplay.data.LibraryRepository
-import com.martacalo.letsplay.data.LibraryRepositoryImpl
-import com.martacalo.letsplay.data.SearchRepository
-import com.martacalo.letsplay.data.SearchRepositoryImpl
+import com.martacalo.letsplay.data.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +20,10 @@ class RepositoryModule {
     @Singleton
     fun provideLibraryRepository(libraryRepository: LibraryRepositoryImpl): LibraryRepository =
         libraryRepository
+
+    @Provides
+    @Singleton
+    fun provideGameDetailsRepository(gameDetailsRepository: GameDetailsRepositoryImpl): GameDetailsRepository =
+        gameDetailsRepository
 
 }

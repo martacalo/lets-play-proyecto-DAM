@@ -1,4 +1,5 @@
 package com.martacalo.letsplay.ui.gamedetails.contract
 
-class GameDetailsNavigationEvent {
+sealed class GameDetailsNavigationEvent {
+    object NavigateBack: GameDetailsNavigationEvent()
 }

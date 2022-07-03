@@ -14,4 +14,7 @@ interface GamesDao {
 
     @Query("SELECT id, name, small, medium, thumb, large, original, playtime, min_players, max_players, year_published FROM game WHERE name LIKE :name")
     fun search(name: String): Flow<List<GameEntity>>
+
+    @Query("SELECT * FROM game WHERE id LIKE :id")
+    fun getGame(id: String): Flow<GameEntity>
 }
