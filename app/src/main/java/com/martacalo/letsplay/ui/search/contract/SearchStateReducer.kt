@@ -1,4 +1,4 @@
-package com.martacalo.letsplay.ui.search
+package com.martacalo.letsplay.ui.search.contract
 
 import com.martacalo.letsplay.core.ui.StateReducer
 import com.martacalo.letsplay.ui.search.model.Game

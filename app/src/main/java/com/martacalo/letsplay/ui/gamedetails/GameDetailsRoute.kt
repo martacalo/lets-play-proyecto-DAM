@@ -1,9 +1,9 @@
-package com.martacalo.letsplay.ui.game
+package com.martacalo.letsplay.ui.gamedetails
 
 import androidx.compose.runtime.Composable
 
 @Composable
-fun GameRoute(
+fun GameDetailsRoute(
     onBackButton: () -> Unit,
 ) {
 }

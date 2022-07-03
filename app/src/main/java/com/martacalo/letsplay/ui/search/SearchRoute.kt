@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.martacalo.letsplay.ui.common.SearchBar
+import com.martacalo.letsplay.ui.search.contract.SearchViewEffect
 import com.martacalo.letsplay.ui.search.model.Game
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect

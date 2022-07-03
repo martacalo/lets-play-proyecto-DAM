@@ -1,4 +1,4 @@
-package com.martacalo.letsplay.ui.library
+package com.martacalo.letsplay.ui.library.contract
 
 import com.martacalo.letsplay.core.ui.ViewIntent
 

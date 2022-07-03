@@ -5,6 +5,10 @@ import com.martacalo.letsplay.core.ui.StateReducer
 import com.martacalo.letsplay.core.ui.ViewEffect
 import com.martacalo.letsplay.data.SearchRepository
 import com.martacalo.letsplay.data.remote.ResponseResult
+import com.martacalo.letsplay.ui.search.contract.SearchStateReducer
+import com.martacalo.letsplay.ui.search.contract.SearchViewEffect
+import com.martacalo.letsplay.ui.search.contract.SearchViewIntent
+import com.martacalo.letsplay.ui.search.contract.SearchViewState
 import com.martacalo.letsplay.ui.search.model.Game
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

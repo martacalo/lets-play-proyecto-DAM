@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.martacalo.letsplay.ui.game.GameRoute
+import com.martacalo.letsplay.ui.gamedetails.GameDetailsRoute
 import com.martacalo.letsplay.ui.library.LibraryRoute
 import com.martacalo.letsplay.ui.library.contract.LibraryNavigationEvent
 import com.martacalo.letsplay.ui.search.SearchRoute
@@ -40,7 +40,7 @@ fun LetsPlayNavHost(
         }
 
         composable(route = "game/{gameId}") {
-            GameRoute {
+            GameDetailsRoute {
 
             }
         }
